@@ -41,8 +41,11 @@ const signup = (req,res) => {
                     )
                     newUser.dataValues.token = token;
                     delete newUser.dataValues.password;
-                    console.log(newUser)
-                    res.send(newUser);
+                    data={
+                        user: newUser,
+                        child: newChild
+                    }
+                    res.send(data);
                 })
                 .catch(err => {
                     console.log(err)
@@ -63,7 +66,13 @@ const login = (req,res) => {
         where: {
             username: req.body.username
         },
-        attributes: ['name','childId','id','username','password']
+        attributes: ['name','childId','id','username','password'],
+        include: [
+            {
+                model: Child,
+                attributes: ['name', 'age']
+            }
+        ]
     })
     .then(foundUser => {
         if(foundUser){
