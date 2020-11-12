@@ -2,6 +2,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const User = require('../models').Users;
+const Child = require('../models').Child;
 
 const signup = (req,res) => {
     bcrypt.genSalt(10, (err, salt) => {
@@ -14,32 +15,44 @@ const signup = (req,res) => {
                 return res.status(500).json(err);
             }
             req.body.password = hashedPwd;
-            console.log(req.body)
-            User.create(req.body)
-            .then(newUser => {
-                const token = jwt.sign(
-                    {
-                        username: newUser.username,
-                        id: newUser.id
-                    },
-                    process.env.JWT_SECRET,
-                    {
-                        expiresIn: "30 days"
+            let child = {
+                name: req.body.childName,
+                age: req.body.childAge
+            }
+            Child.create(child)
+            .then(newChild => {
+                let user = {
+                    username: req.body.username,
+                    password: req.body.password,
+                    name: req.body.name,
+                    childId: newChild.id
+                }
+                User.create(user)
+                .then(newUser => {
+                    const token = jwt.sign(
+                        {
+                            username: newUser.username,
+                            id: newUser.id
+                        },
+                        process.env.JWT_SECRET,
+                        {
+                            expiresIn: "30 days"
+                        }
+                    )
+                    newUser.dataValues.token = token;
+                    delete newUser.dataValues.password;
+                    console.log(newUser)
+                    res.send(newUser);
+                })
+                .catch(err => {
+                    console.log(err)
+                    if(err.name === 'SequelizeUniqueConstraintError'){
+                        res.status(400).send(`Error: ${err.name}`)
                     }
-                )
-                newUser.dataValues.token = token;
-                delete newUser.dataValues.password;
-                console.log(newUser)
-                res.send(newUser);
-            })
-            .catch(err => {
-                console.log(err)
-                if(err.name === 'SequelizeUniqueConstraintError'){
-                    res.status(400).send(`Error: ${err.name}`)
-                }
-                else{
-                    res.status(400).send(`Error: ${err}`);
-                }
+                    else{
+                        res.status(400).send(`Error: ${err}`);
+                    }
+                })
             })
         })
     })
