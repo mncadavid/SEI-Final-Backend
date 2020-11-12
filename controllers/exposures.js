@@ -30,7 +30,9 @@ const getFoodData = (req, res) => {
             childId: req.params.childId,
             foodId: req.params.foodId
         },
-        orderBy
+        order: [
+            ['date','DESC']
+        ]
     })
     .then(foundExposures => {
         let response = {
