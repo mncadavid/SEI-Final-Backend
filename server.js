@@ -10,7 +10,8 @@ const routes = require('./routes');
 const app = express();
 
 const corsOptions = {
-    origin: ['http://localhost:3000'],
+    // origin: ['http://localhost:3000'],
+    origin: ['http://food-folio.surge.sh/'],
     methods: "GET,POST,PUT,DELETE",
     credentials: true,
     optionsSuccessStatus: 200
