@@ -21,7 +21,7 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      childId: {
+      child_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         unique: true

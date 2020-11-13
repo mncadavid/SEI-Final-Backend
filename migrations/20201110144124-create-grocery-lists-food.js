@@ -8,11 +8,11 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      listId: {
+      list_id: {
         type: Sequelize.INTEGER,
         allowNull: false
       },
-      foodId: {
+      food_id: {
         type: Sequelize.INTEGER,
         allowNull: false
       },
@@ -30,7 +30,7 @@ module.exports = {
     {
       uniqueKeys: {
         actions_unique: {
-          fields: ['listId', 'foodId']
+          fields: ['list_id', 'food_id']
         }
       }
     });

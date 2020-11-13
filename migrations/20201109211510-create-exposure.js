@@ -8,15 +8,15 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      userId: {
+      user_id: {
         type: Sequelize.INTEGER,
         allowNull: false
       },
-      foodId: {
+      food_id: {
         type: Sequelize.INTEGER,
         allowNull: false
       },
-      childId: {
+      child_id: {
         type: Sequelize.INTEGER,
         allowNull: false
       },
