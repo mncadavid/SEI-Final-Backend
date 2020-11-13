@@ -2,8 +2,8 @@ const User = require('../models').Users;
 const Food = require('../models').Food;
 const GroceryList = require('../models').GroceryList;
 
-const index = (req, res) => {
-    User.findByPk(req.user.id, {
+const getLists = (req, res) => {
+    User.findByPk(req.params.userId, {
         include: [
             {
                 model: GroceryList,
@@ -31,7 +31,15 @@ const show = (req, res) => {
     })
 }
 
+const createList = (req, res) => {
+    GroceryList.create(req.body)
+    .then(newList => {
+        res.redirect(`/lists/${req.body.userId}`);
+    })
+}
+
 module.exports = {
-    index,
-    show
+    getLists,
+    show,
+    createList
 }
