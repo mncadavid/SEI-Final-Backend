@@ -2,24 +2,21 @@ const User = require('../models').Users;
 const Food = require('../models').Food;
 const GroceryList = require('../models').GroceryList;
 
-const getLists = (req, res) => {
-    User.findByPk(req.params.userId, {
-        include: [
-            {
-                model: GroceryList,
-                attributes: ['id', 'name', 'notes'],
-                include: [{
-                    model: Food,
-                    attributes: ['name', 'category']
-                }]
-            }
-        ],
-        attributes: ['username', 'childId']
+const getLists = (req,res) => {
+    GroceryList.findAll({
+        where: {
+            userId: req.params.userId
+        },
+        attributes: ['id','name','notes'],
+        include: [{
+            model: Food,
+            attributes: ['name','category']
+        }]
     })
-    .then(foundUser => {
-        res.send(foundUser);
+    .then(foundLists => {
+        res.send(foundLists);
     })
-};
+}
 
 const show = (req, res) => {
     User.findByPk(1, {
