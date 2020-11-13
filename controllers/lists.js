@@ -36,6 +36,18 @@ const createList = (req, res) => {
     })
 }
 
+const deleteList = (req,res) => {
+    console.log(req.body);
+    GroceryList.destroy({
+        where: {
+            id: req.body.id
+        }
+    })
+    .then(()=> {
+        res.redirect(`/lists/${req.body.userId}`)
+    })
+}
+
 const addFoodToList = (req,res) => {
     GroceryListsFood.create(req.body)
     .then(newFoodEntry => {
@@ -46,5 +58,6 @@ const addFoodToList = (req,res) => {
 module.exports = {
     getLists,
     createList,
-    addFoodToList
+    addFoodToList,
+    deleteList
 }

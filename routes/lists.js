@@ -7,5 +7,6 @@ const ctrl = require('../controllers');
 router.get('/:userId', ctrl.lists.getLists);
 router.post('/create', ctrl.lists.createList);
 router.post('/add', ctrl.lists.addFoodToList);
+router.post('/delete', ctrl.lists.deleteList);
 
 module.exports = router;
