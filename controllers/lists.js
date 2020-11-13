@@ -1,6 +1,7 @@
 const User = require('../models').Users;
 const Food = require('../models').Food;
 const GroceryList = require('../models').GroceryList;
+const GroceryListsFood = require('../models').GroceryListsFood;
 
 const getLists = (req,res) => {
     GroceryList.findAll({
@@ -18,15 +19,15 @@ const getLists = (req,res) => {
     })
 }
 
-const show = (req, res) => {
-    User.findByPk(1, {
-        include: [Children]
-    })
-    .then(user => {
-        console.log(user);
-        res.send(`User: ${user.name}. Child: ${user.Children[0].dataValues.name}`)
-    })
-}
+// const show = (req, res) => {
+//     User.findByPk(1, {
+//         include: [Children]
+//     })
+//     .then(user => {
+//         console.log(user);
+//         res.send(`User: ${user.name}. Child: ${user.Children[0].dataValues.name}`)
+//     })
+// }
 
 const createList = (req, res) => {
     GroceryList.create(req.body)
@@ -35,8 +36,16 @@ const createList = (req, res) => {
     })
 }
 
+const addFoodToList = (req,res) => {
+    GroceryListsFood.create(req.body)
+    .then(newFoodEntry => {
+        res.send(newFoodEntry);
+    })
+}
+
 module.exports = {
     getLists,
     show,
-    createList
+    createList,
+    addFoodToList
 }
