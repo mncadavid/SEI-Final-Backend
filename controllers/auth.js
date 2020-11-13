@@ -1,8 +1,8 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-const User = require('../models').Users;
-const Child = require('../models').Child;
+const User = require('../models').users;
+const Child = require('../models').child;
 
 const signup = (req,res) => {
     bcrypt.genSalt(10, (err, salt) => {
@@ -25,7 +25,7 @@ const signup = (req,res) => {
                     username: req.body.username,
                     password: req.body.password,
                     name: req.body.name,
-                    childId: newChild.id
+                    child_id: newChild.id
                 }
                 User.create(user)
                 .then(newUser => {
@@ -67,7 +67,7 @@ const login = (req,res) => {
         where: {
             username: req.body.username
         },
-        attributes: ['name','childId','id','username','password'],
+        attributes: ['name','child_id','id','username','password'],
         include: [
             {
                 model: Child,
@@ -109,7 +109,7 @@ const login = (req,res) => {
 
 const verifyUser = (req, res) => {
     User.findByPk(req.user.id, {
-        attributes: ['id', 'username','name','childId']
+        attributes: ['id', 'username','name','child_id']
     })
     .then(foundUser => {
         res.status(200).json(foundUser);

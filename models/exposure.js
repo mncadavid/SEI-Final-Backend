@@ -3,26 +3,26 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Exposure extends Model {
+  class exposure extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Exposure.belongsTo(models.Child, {foreignKey: "id"});
-      Exposure.belongsTo(models.Food, {foreignKey: "id"});
+      exposure.belongsTo(models.child, {foreignKey: "id"});
+      exposure.belongsTo(models.food, {foreignKey: "id"});
     }
   };
-  Exposure.init({
-    userId: DataTypes.INTEGER,
-    foodId: DataTypes.INTEGER,
-    childId: DataTypes.INTEGER,
+  exposure.init({
+    user_id: DataTypes.INTEGER,
+    food_id: DataTypes.INTEGER,
+    child_id: DataTypes.INTEGER,
     date: DataTypes.DATE,
     reaction: DataTypes.TEXT
   }, {
     sequelize,
-    modelName: 'Exposure',
+    modelName: 'exposure',
   });
-  return Exposure;
+  return exposure;
 };

@@ -1,13 +1,13 @@
-const Food = require('../models').Food;
-const Exposure = require('../models').Exposure;
-const Child = require('../models/').Child;
+const Food = require('../models').food;
+const Exposure = require('../models').exposure;
+const Child = require('../models/').child;
 
 const index = (req, res) => {
     Child.findByPk(3, {
         include: [
             {
                 model: Exposure,
-                attributes: ['foodId', 'date', 'reaction'],
+                attributes: ['food_id', 'date', 'reaction'],
                 include: [{
                     model: Food,
                     attributes: ['name', 'category']
@@ -24,11 +24,11 @@ const index = (req, res) => {
 
 const getFoodData = (req, res) => {
     console.log("======================")
-    console.log(req.params.childId)
+    console.log(req.params.child_id)
     Exposure.findAll({
         where: {
-            childId: req.params.childId,
-            foodId: req.params.foodId
+            child_id: req.params.child_id,
+            food_id: req.params.food_id
         },
         order: [
             ['date','DESC']
@@ -40,11 +40,11 @@ const getFoodData = (req, res) => {
         };
         Food.findAll({
             where: {
-                id: req.params.foodId
+                id: req.params.food_id
             }
         })
         .then(food => {
-            response.foodId = req.params.foodId;
+            response.food_id = req.params.food_id;
             response.food = food[0].dataValues.name;
             res.send(response);
         })
@@ -54,9 +54,9 @@ const getFoodData = (req, res) => {
 const addExposure = (req,res) => {
     Exposure.create(req.body)
     .then(newExposure => {
-        Food.findByPk(newExposure.dataValues.foodId)
+        Food.findByPk(newExposure.dataValues.food_id)
         .then(food => {
-            res.redirect(`/exposures/${food.id}/${newExposure.dataValues.childId}`)
+            res.redirect(`/exposures/${food.id}/${newExposure.dataValues.child_id}`)
         })
     })
 }

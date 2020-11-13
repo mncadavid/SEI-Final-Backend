@@ -1,12 +1,12 @@
-const User = require('../models').Users;
-const Food = require('../models').Food;
-const GroceryList = require('../models').GroceryList;
-const GroceryListsFood = require('../models').GroceryListsFood;
+const User = require('../models').users;
+const Food = require('../models').food;
+const GroceryList = require('../models').grocerylist;
+const GroceryListsFood = require('../models').grocerylistsfood;
 
 const getLists = (req,res) => {
     GroceryList.findAll({
         where: {
-            userId: req.params.userId
+            user_id: req.params.user_id
         },
         attributes: ['id','name','notes'],
         include: [{
@@ -32,7 +32,7 @@ const getLists = (req,res) => {
 const createList = (req, res) => {
     GroceryList.create(req.body)
     .then(newList => {
-        res.redirect(`/lists/${req.body.userId}`);
+        res.redirect(`/lists/${req.body.user_id}`);
     })
 }
 
@@ -44,7 +44,7 @@ const deleteList = (req,res) => {
         }
     })
     .then(()=> {
-        res.redirect(`/lists/${req.body.userId}`)
+        res.redirect(`/lists/${req.body.user_id}`)
     })
 }
 

@@ -1,6 +1,6 @@
-const Food = require('../models').Food;
-const Child = require('../models').Child;
-const Exposure=require('../models').Exposure;
+const Food = require('../models').food;
+const Child = require('../models').child;
+const Exposure=require('../models').exposure;
 
 const index = (req, res) => {
     Food.findAll()
@@ -22,8 +22,8 @@ const addFood = (req, res) => {
 const getLastExposure = (req,res) => {
     Exposure.findOne({
         where: {
-            childId: req.params.childId,
-            foodId: req.params.foodId
+            child_id: req.params.child_id,
+            food_id: req.params.food_id
         },
         order: [
             ['date', 'DESC']
