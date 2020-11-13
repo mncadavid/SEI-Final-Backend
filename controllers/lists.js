@@ -45,7 +45,6 @@ const addFoodToList = (req,res) => {
 
 module.exports = {
     getLists,
-    show,
     createList,
     addFoodToList
 }
