@@ -49,9 +49,13 @@ const deleteList = (req,res) => {
 }
 
 const addFoodToList = (req,res) => {
-    GroceryListsFood.create(req.body)
+    let newEntry = {
+        list_id: req.body.list_id,
+        food_id: req.body.food_id
+    }
+    GroceryListsFood.create(newEntry)
     .then(newFoodEntry => {
-        res.send(newFoodEntry);
+        res.redirect(`/lists/${req.body.user_id}`);
     })
 }
 
