@@ -8,13 +8,13 @@ module.exports = {
         username: 'juan',
         password: 'juan',
         name: 'Juan',
-        childId: 1
+        child_id: 1
       },
       {
         username: 'nicky',
         password: 'nicky',
         name: 'Nicky',
-        childId: 2
+        child_id: 2
       }
     ], {});
   },

@@ -5,12 +5,12 @@ module.exports = {
     await queryInterface.bulkInsert('GroceryLists', [
       {
         name: "Whole Foods List",
-        userId: 2,
+        user_id: 2,
         notes: "Get flowers for Mom"
       },
       {
         name: "Fareway List",
-        userId: 1,
+        user_id: 1,
         notes: "If no bread, get waffles."
       }
     ], {});
