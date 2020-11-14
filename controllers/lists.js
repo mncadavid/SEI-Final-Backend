@@ -58,10 +58,26 @@ const addFoodToList = (req,res) => {
         res.redirect(`/lists/${req.body.user_id}`);
     })
 }
+const removeFood = (req, res) => {
+    console.log(req.body)
+    GroceryListsFood.destroy({
+        where: {
+            food_id: req.body.food_id,
+            list_id: req.body.list_id
+        }
+    })
+    .then(()=> {
+        GroceryList.findByPk(req.body.list_id)
+        .then(foundList => {
+            res.redirect(`/lists/${foundList.user_id}`);
+        })
+    })
+}
 
 module.exports = {
     getLists,
     createList,
     addFoodToList,
-    deleteList
+    deleteList,
+    removeFood
 }
