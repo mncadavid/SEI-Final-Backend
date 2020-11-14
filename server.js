@@ -47,7 +47,6 @@ app.use('/browse', routes.browse);
 app.use('/exposures', routes.exposures);
 
 app.get('/', (req,res) => {
-    console.log("Splash Page")
     res.send('Splash page')
 })
 

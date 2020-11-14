@@ -23,8 +23,6 @@ const index = (req, res) => {
 
 
 const getFoodData = (req, res) => {
-    console.log("======================")
-    console.log(req.params.child_id)
     Exposure.findAll({
         where: {
             child_id: req.params.child_id,

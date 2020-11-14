@@ -19,16 +19,6 @@ const getLists = (req,res) => {
     })
 }
 
-// const show = (req, res) => {
-//     User.findByPk(1, {
-//         include: [Children]
-//     })
-//     .then(user => {
-//         console.log(user);
-//         res.send(`User: ${user.name}. Child: ${user.Children[0].dataValues.name}`)
-//     })
-// }
-
 const createList = (req, res) => {
     GroceryList.create(req.body)
     .then(newList => {
@@ -37,7 +27,6 @@ const createList = (req, res) => {
 }
 
 const deleteList = (req,res) => {
-    console.log(req.body);
     GroceryList.destroy({
         where: {
             id: req.body.id
@@ -59,7 +48,6 @@ const addFoodToList = (req,res) => {
     })
 }
 const removeFood = (req, res) => {
-    console.log(req.body)
     GroceryListsFood.destroy({
         where: {
             food_id: req.body.food_id,
