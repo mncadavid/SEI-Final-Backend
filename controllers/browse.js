@@ -1,11 +1,13 @@
 const Food = require('../models').food;
-const Child = require('../models').child;
 const Exposure=require('../models').exposure;
 
 const index = (req, res) => {
     Food.findAll()
     .then(food => {
         res.status(200).json(food);
+    })
+    .catch(err => {
+        res.send(err);
     })
 }
 
@@ -16,6 +18,14 @@ const addFood = (req, res) => {
         .then(food => {
             res.status(200).json(food);
         })
+    })
+    .catch(err => {
+        if(err.name === 'SequelizeUniqueConstraintError'){
+            res.send(`Error: Food already exists`)
+        }
+        else{
+            res.send(`Error: ${err}`);
+        }
     })
 }
 
