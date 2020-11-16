@@ -3,6 +3,10 @@ const Food = require('../models').food;
 const GroceryList = require('../models').grocerylist;
 const GroceryListsFood = require('../models').grocerylistsfood;
 
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const authToken = process.env.TWILIO_AUTH_TOKEN;
+const client = require('twilio')(accountSid,authToken);
+
 const getLists = (req,res) => {
     GroceryList.findAll({
         where: {
@@ -62,10 +66,27 @@ const removeFood = (req, res) => {
     })
 }
 
+const sendListText = (req,res) => {
+    client.messages
+    .create({
+       body: req.body.message,
+       from: '+19036239049',
+       to: req.body.phoneNumber
+     })
+    .then(message => {
+        console.log(message.sid);
+        res.send("Success");
+    })
+    .catch(err => {
+        console.log(err);
+    });
+}
+
 module.exports = {
     getLists,
     createList,
     addFoodToList,
     deleteList,
-    removeFood
+    removeFood,
+    sendListText
 }
