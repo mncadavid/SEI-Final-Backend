@@ -9,8 +9,8 @@ const GroceryListsFood = require('../models').grocerylistsfood;
 const Nexmo = require('nexmo');
 
 const nexmo = new Nexmo({
-  apiKey: '6417ba4a',
-  apiSecret: 'amWsXa1WuK8nStCs',
+  apiKey: process.env.NEXMO_API_KEY,
+  apiSecret: process.env.NEXMO_API_SECRET,
 });
 
 const getLists = (req,res) => {
@@ -55,6 +55,14 @@ const addFoodToList = (req,res) => {
     GroceryListsFood.create(newEntry)
     .then(newFoodEntry => {
         res.redirect(`/lists/${req.body.user_id}`);
+    })
+    .catch(err => {
+        if(err.name === 'SequelizeUniqueConstraintError'){
+            res.send(`Error: Food already added to list`)
+        }
+        else{
+            res.send(`Error: ${err}`);
+        }
     })
 }
 const removeFood = (req, res) => {

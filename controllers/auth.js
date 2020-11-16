@@ -48,12 +48,11 @@ const signup = (req,res) => {
                     res.send(data);
                 })
                 .catch(err => {
-                    console.log(err)
                     if(err.name === 'SequelizeUniqueConstraintError'){
-                        res.status(400).send(`Error: ${err.name}`)
+                        res.send(`Error: Username taken`)
                     }
                     else{
-                        res.status(400).send(`Error: ${err}`);
+                        res.send(`Error: ${err}`);
                     }
                 })
             })
@@ -93,16 +92,16 @@ const login = (req,res) => {
                     delete foundUser.dataValues.password;
                     res.send(foundUser);
                 } else{
-                    res.send(`Incorrect Password`)
+                    res.send(`Incorrect Username or Password`)
                 }
             })
         }
         else if(!foundUser){
-            return res.send(`Incorrect Username`)
+            return res.send(`Incorrect Username or Password`)
         }
     })
     .catch(err => {
-        res.status(400).send(`Error: ${err}`);
+        res.send(`Error: ${err}`);
     }
     )
 }
@@ -121,7 +120,7 @@ const verifyUser = (req, res) => {
         res.status(200).json(foundUser);
     })
     .catch(err => {
-        res.status(500).send(`Error: ${err}`);
+        res.send(`Error: ${err}`);
     })
 }
 

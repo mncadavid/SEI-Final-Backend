@@ -1,26 +1,5 @@
 const Food = require('../models').food;
 const Exposure = require('../models').exposure;
-const Child = require('../models/').child;
-
-const index = (req, res) => {
-    Child.findByPk(3, {
-        include: [
-            {
-                model: Exposure,
-                attributes: ['food_id', 'date', 'reaction'],
-                include: [{
-                    model: Food,
-                    attributes: ['name', 'category']
-                }]
-            }
-        ],
-        attributes: ['name', 'age']
-    })
-    .then(foundChild => {
-        res.send(foundChild);
-    })
-};
-
 
 const getFoodData = (req, res) => {
     Exposure.findAll({
@@ -60,7 +39,6 @@ const addExposure = (req,res) => {
 }
 
 module.exports = {
-    index,
     getFoodData,
     addExposure
 }

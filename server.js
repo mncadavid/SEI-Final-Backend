@@ -39,7 +39,6 @@ const verifyToken = (req,res,next) => {
     });
 }
 
-app.use('/users', routes.users);
 app.use('/lists', routes.lists);
 app.use('/auth', routes.auth);
 app.use('/auth/verify', verifyToken, routes.auth);
