@@ -71,7 +71,7 @@ const login = (req,res) => {
         include: [
             {
                 model: Child,
-                attributes: ['name', 'age']
+                attributes: ['name', 'age','id']
             }
         ]
     })
@@ -109,7 +109,13 @@ const login = (req,res) => {
 
 const verifyUser = (req, res) => {
     User.findByPk(req.user.id, {
-        attributes: ['id', 'username','name','child_id']
+        attributes: ['id', 'username','name','child_id'],
+        include: [
+            {
+                model: Child,
+                attributes: ['name', 'age']
+            }
+        ]
     })
     .then(foundUser => {
         res.status(200).json(foundUser);
