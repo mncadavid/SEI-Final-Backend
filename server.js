@@ -10,8 +10,8 @@ const routes = require('./routes');
 const app = express();
 
 const corsOptions = {
-    origin: ['http://localhost:3000'],
-    // origin: ['http://picky-preventer.surge.sh'],
+    // origin: ['http://localhost:3000'],
+    origin: ['http://picky-preventer.surge.sh'],
     methods: "GET,POST,PUT,DELETE",
     credentials: true,
     optionsSuccessStatus: 200
