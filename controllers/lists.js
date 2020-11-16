@@ -9,8 +9,7 @@ const GroceryListsFood = require('../models').grocerylistsfood;
 const Nexmo = require('nexmo');
 
 const nexmo = new Nexmo({
-  apiKey: '6417ba4a',
-  apiSecret: 'amWsXa1WuK8nStCs',
+
 });
 
 const getLists = (req,res) => {
