@@ -3,9 +3,15 @@ const Food = require('../models').food;
 const GroceryList = require('../models').grocerylist;
 const GroceryListsFood = require('../models').grocerylistsfood;
 
-const accountSid = process.env.TWILIO_ACCOUNT_SID;
-const authToken = process.env.TWILIO_AUTH_TOKEN;
-const client = require('twilio')(accountSid,authToken);
+// const accountSid = process.env.TWILIO_ACCOUNT_SID;
+// const authToken = process.env.TWILIO_AUTH_TOKEN;
+// const client = require('twilio')(accountSid,authToken);
+const Nexmo = require('nexmo');
+
+const nexmo = new Nexmo({
+  apiKey: '6417ba4a',
+  apiSecret: 'amWsXa1WuK8nStCs',
+});
 
 const getLists = (req,res) => {
     GroceryList.findAll({
@@ -67,19 +73,35 @@ const removeFood = (req, res) => {
 }
 
 const sendListText = (req,res) => {
-    client.messages
-    .create({
-       body: req.body.message,
-       from: '+19036239049',
-       to: req.body.phoneNumber
-     })
-    .then(message => {
-        console.log(message.sid);
-        res.send("Success");
-    })
-    .catch(err => {
-        console.log(err);
+    // client.messages
+    // .create({
+    //    body: req.body.message,
+    //    from: '+19036239049',
+    //    to: req.body.phoneNumber
+    //  })
+    // .then(message => {
+    //     console.log(message.sid);
+    //     res.send("Success");
+    // })
+    // .catch(err => {
+    //     console.log(err);
+    // });
+    const from = '18632382512';
+    const to = req.body.phoneNumber;
+    const text = req.body.message;
+    let resp = nexmo.message.sendSms(from,to,text,{type: 'unicode'}, (err,responseData) => {
+        if(err){
+            console.log(err);
+        }
+        else{
+            if (responseData.messages[0]['status'] === "0") {
+                console.log("Message sent successfully.");
+            } else {
+                console.log(`Message failed with error: ${responseData.messages[0]['error-text']}`);
+            }
+        }
     });
+    console.log(resp);
 }
 
 module.exports = {
