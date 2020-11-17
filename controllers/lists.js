@@ -115,7 +115,6 @@ const sendListText = (req,res) => {
             }
         }
     });
-    console.log(resp);
 }
 
 module.exports = {
