@@ -8,6 +8,7 @@ const bodyParser = require('body-parser');
 const routes = require('./routes');
 const app = express();
 
+//Sets where requests are allowed to come from
 const corsOptions = {
     // origin: ['http://localhost:3000'],
     origin: ['http://picky-preventer.surge.sh'],
@@ -19,6 +20,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
 
+//verifies the token provided by the user to make sure it is valid
 const verifyToken = (req,res,next) => {
     let token = req.headers['authorization'];
 

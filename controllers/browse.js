@@ -1,6 +1,7 @@
 const Food = require('../models').food;
 const Exposure=require('../models').exposure;
 
+//Returns a list of all of the foods in the database
 const index = (req, res) => {
     Food.findAll()
     .then(food => {
@@ -10,7 +11,7 @@ const index = (req, res) => {
         res.send(err);
     })
 }
-
+//Creates a new food
 const addFood = (req, res) => {
     Food.create(req.body)
     .then(newFood => {
@@ -28,7 +29,7 @@ const addFood = (req, res) => {
         }
     })
 }
-
+//Gets the most recent exposure for the given food and child
 const getLastExposure = (req,res) => {
     Exposure.findOne({
         where: {

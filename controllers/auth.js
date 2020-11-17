@@ -3,7 +3,10 @@ const jwt = require('jsonwebtoken');
 
 const User = require('../models').users;
 const Child = require('../models').child;
+const GroceryList = require('../models').grocerylist;
 
+//Hashes the user's password, creates a new child for them, creates a new user,
+//And creates their first list
 const signup = (req,res) => {
     bcrypt.genSalt(10, (err, salt) => {
         if(err){
@@ -45,7 +48,13 @@ const signup = (req,res) => {
                         user: newUser,
                         child: newChild
                     }
-                    res.send(data);
+                    GroceryList.create({
+                        name: "My First List",
+                        user_id: newUser.id
+                    })
+                    .then(newList => {
+                        res.send(data);
+                    })
                 })
                 .catch(err => {
                     if(err.name === 'SequelizeUniqueConstraintError'){
@@ -60,7 +69,8 @@ const signup = (req,res) => {
         })
     })
 }
-
+//Gets a user matching the username and then checks if the input password
+//matches the stored password. Creates a token that it stores and sends
 const login = (req,res) => {
     User.findOne({
         where: {
@@ -105,7 +115,7 @@ const login = (req,res) => {
     }
     )
 }
-
+//Gets the information for the user that was sent and their child.
 const verifyUser = (req, res) => {
     User.findByPk(req.user.id, {
         attributes: ['id', 'username','name','child_id'],

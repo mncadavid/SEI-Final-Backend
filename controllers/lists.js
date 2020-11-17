@@ -13,6 +13,7 @@ const nexmo = new Nexmo({
   apiSecret: process.env.NEXMO_API_SECRET,
 });
 
+//Gets all the lists for the given user
 const getLists = (req,res) => {
     GroceryList.findAll({
         where: {
@@ -28,14 +29,14 @@ const getLists = (req,res) => {
         res.send(foundLists);
     })
 }
-
+//Creates a new list for the given user
 const createList = (req, res) => {
     GroceryList.create(req.body)
     .then(newList => {
         res.redirect(`/lists/${req.body.user_id}`);
     })
 }
-
+//Deletes the given list
 const deleteList = (req,res) => {
     GroceryList.destroy({
         where: {
@@ -46,7 +47,8 @@ const deleteList = (req,res) => {
         res.redirect(`/lists/${req.body.user_id}`)
     })
 }
-
+//Adds a food to the given list. Returns an error if the food has already 
+//been added to this list
 const addFoodToList = (req,res) => {
     let newEntry = {
         list_id: req.body.list_id,
@@ -65,6 +67,7 @@ const addFoodToList = (req,res) => {
         }
     })
 }
+//Removes a food from the given list.
 const removeFood = (req, res) => {
     GroceryListsFood.destroy({
         where: {
@@ -79,8 +82,11 @@ const removeFood = (req, res) => {
         })
     })
 }
-
+//Sends the list as a text to the given phone number
 const sendListText = (req,res) => {
+    // This code was required for Twilio.  It does work but I
+    // have left the code below which works for Nexmo instead.
+    // I did want to keep this for reference.
     // client.messages
     // .create({
     //    body: req.body.message,

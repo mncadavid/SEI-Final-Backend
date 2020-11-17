@@ -1,6 +1,8 @@
 const Food = require('../models').food;
 const Exposure = require('../models').exposure;
 
+//Gets a lists of all of the exposures that the child
+//has had with the given food and orders them by date
 const getFoodData = (req, res) => {
     Exposure.findAll({
         where: {
@@ -27,7 +29,7 @@ const getFoodData = (req, res) => {
         })
     })
 };
-
+//Adds a new exposure for the food with the given child.
 const addExposure = (req,res) => {
     Exposure.create(req.body)
     .then(newExposure => {
